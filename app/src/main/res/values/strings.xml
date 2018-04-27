@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">PopMovies Stage 2</string>
+    <string name="menu_popular">Show popular</string>
+    <string name="menu_top_rated">Show top rated</string>
+    <string name="show_popular">Showing popular movies</string>
+    <string name="show_top_rated">Showing top rated movies</string>
+    <string name="thumbtext">Movie picture</string>
+    <string name="rating">Rating:</string>
+    <string name="nonetwork">There is no network connection</string>
+    <string name="fetcherror">Connection error during fetching data</string>
+</resources>
