@@ -13,13 +13,16 @@ import org.json.JSONObject;
  */
 
 public class  JsonParser {
-    public MovieList ParseMovieString(String toParse) {
+    public MovieList ParseMovieString(String toParse, MovieList list) {
         MovieList returnMovieList;
         MovieListItem listItem;
         JSONObject MovieList;
         JSONObject movieItem;
         JSONArray MovieItems;
-        returnMovieList = new MovieList();
+        if (list == null)
+            returnMovieList = new MovieList();
+        else
+            returnMovieList = list;
         if (toParse == null) return null; // there is nothing to parse
         try {
             MovieList = new JSONObject(toParse);
@@ -47,6 +50,24 @@ public class  JsonParser {
             return null;
         }
         return returnMovieList;
+    }
+
+    public MovieListItem ParseMovieItem (String stringToParse){
+        MovieListItem listItem = new MovieListItem();
+        try {
+            JSONObject movieItem = new JSONObject(stringToParse);
+            listItem.posterPath = movieItem.getString("poster_path");
+            listItem.adult = movieItem.getBoolean("adult");
+            listItem.backdropPath = movieItem.getString("backdrop_path");
+            listItem.title = movieItem.getString("original_title");
+            listItem.releaseDate = movieItem.getString("release_date");
+            listItem.voteAvarage = movieItem.getInt("vote_average");
+            listItem.owerview = movieItem.getString("overview");
+            listItem.id= movieItem.getInt("id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return listItem;
     }
 
     public ReviewList ParseReviewString (String stringToParse){

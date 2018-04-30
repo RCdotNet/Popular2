@@ -1,5 +1,8 @@
+package se.rcdotnet.udacity.pop1.database;
+
 import android.net.Uri;
 import android.provider.BaseColumns;
+
 
 /**
  * Created by Laszlo_HP_Notebook on 2018-04-26.
@@ -15,7 +18,7 @@ public class MoviesContract  {
 
     // the pats in the databas
     public static final String PATH_MOVIES = "movies";
-    public static final String PATH_REWIEWS = "reviews";
+    public static final String PATH_REVIEWS = "reviews";
     public static final String PATH_VIDEOS = "videos";
 
 
@@ -42,7 +45,7 @@ public class MoviesContract  {
     }
     public  static final class reviews implements BaseColumns {
         // Reviews content uri
-        public  static final Uri REVIEWS_CONTENT_URI = CONTENT_URI_BASE.buildUpon().appendPath(PATH_REWIEWS).build();
+        public  static final Uri REVIEWS_CONTENT_URI = CONTENT_URI_BASE.buildUpon().appendPath(PATH_REVIEWS).build();
 
         public static final String TABLE_NAME = "reviews";
         public static final String COLUMN_ID_NAME ="id";

@@ -8,7 +8,7 @@ package se.rcdotnet.udacity.pop1;
 public final class ApiKey {
 
     // Define your api key here.
-    private static final String APIKEY="";
+    private static final String APIKEY="011ee508ef8df5be61bbe06b23767ae4";
 
     public static String getAPIKEY() {
         return APIKEY;

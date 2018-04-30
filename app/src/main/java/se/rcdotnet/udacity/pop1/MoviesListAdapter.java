@@ -52,7 +52,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
                 .load(pictureUri)
                 .into(holder.mImageView);
         // set the items tag to hold a copy of the MovieListItem object for further reference (in click handler)
-        holder.itemView.setTag(mMovieList.movies.get(position));
+        holder.itemView.setTag(position);
     }
 
     public void setData(MovieList data){

@@ -24,10 +24,10 @@ public final class NetworkU {
     static final String REVIEW="reviews";  // have to pass id and /reviews
     static final String VIDEOS="videos";
 
-    public static String get_Popular(){
+    public static String get_Popular(int i){
         // Build Uri for popular endpoint and get data
         URL popularURL;
-        Uri returnuri = Uri.parse(POPULAR).buildUpon().appendQueryParameter("api_key",ApiKey.getAPIKEY()).build();
+        Uri returnuri = Uri.parse(POPULAR).buildUpon().appendQueryParameter("api_key",ApiKey.getAPIKEY()).appendQueryParameter("page",String.valueOf(i)).build();
         try {
             popularURL = new URL(returnuri.toString());
         } catch (MalformedURLException e) {
@@ -41,10 +41,10 @@ public final class NetworkU {
             return "";
         }
     }
-    public static String get_Top_Rated(){
+    public static String get_Top_Rated(int i){
         // Build Uri for top rated enpoint and get data
         URL topRatedURL;
-        Uri returnuri = Uri.parse(TOP_RATED).buildUpon().appendQueryParameter("api_key",ApiKey.getAPIKEY()).build();
+        Uri returnuri = Uri.parse(TOP_RATED).buildUpon().appendQueryParameter("api_key",ApiKey.getAPIKEY()).appendQueryParameter("page",String.valueOf(i)).build();
         try {
             topRatedURL = new URL(returnuri.toString());
         } catch (MalformedURLException e) {
@@ -87,6 +87,24 @@ public final class NetworkU {
         }
         try {
             return getResponse(videosURL);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public static String get_Details(int i){
+        // Build Uri for popular endpoint and get data
+        URL detailsURL;
+        Uri returnuri = Uri.parse(BASEURL).buildUpon().appendPath(String.valueOf(i)).appendQueryParameter("api_key",ApiKey.getAPIKEY()).build();
+        try {
+            detailsURL = new URL(returnuri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return "";
+        }
+        try {
+            return getResponse(detailsURL);
         } catch (IOException e) {
             e.printStackTrace();
             return "";

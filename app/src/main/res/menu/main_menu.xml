@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
     <item
         android:id="@+id/menu_popular"
         android:title="@string/menu_popular"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_top_rated"
         android:title="@string/menu_top_rated"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_favorit"
+        android:title="@string/favorit"
+        app:showAsAction="never" />
 </menu>

@@ -19,6 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name="se.rcdotnet.udacity.pop1.DetailActivity"></activity>
+        <provider
+            android:name="se.rcdotnet.udacity.pop1.database.MovieContentProvider"
+            android:authorities="se.rcdotnet.udacity.pop1.movies"
+            android:exported="false"/>
 
 
     </application>

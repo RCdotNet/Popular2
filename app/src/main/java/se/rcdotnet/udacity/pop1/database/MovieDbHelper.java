@@ -1,3 +1,5 @@
+package se.rcdotnet.udacity.pop1.database;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -15,8 +17,8 @@ private static final String REWIEWS_TABLE = "reviews";
 private static final String VIDEOS_TABLE = "videos";
 
 
-    public MovieDbHelper(Context context, String name) {
-        super(context, name, null, DB_VERSION);
+    public MovieDbHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
@@ -52,7 +54,7 @@ private static final String VIDEOS_TABLE = "videos";
             MoviesContract.videos.COLUMN_ISO_639_1_NAME + " TEXT," +
             MoviesContract.videos.COLUMN_ISO_3166_1_NAME + " TEXT," +
             MoviesContract.videos.COLUMN_KEY_NAME + " TEXT," +
-            MoviesContract.videos.COLUMN_ID_NAME + " TEXT," +
+  //          MoviesContract.videos.COLUMN_ID_NAME + " TEXT," +
             MoviesContract.videos.COLUMN_SITE_NAME + "TEXT," +
             MoviesContract.videos.COLUMN_SIZE_NAME + " INTEGER," +
             MoviesContract.videos.COLUMN_TYPE_NAME + " TEXT" +

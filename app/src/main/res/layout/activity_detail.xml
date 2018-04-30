@@ -2,47 +2,54 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_constrain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:padding="8dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
     tools:context=".DetailActivity">
 
     <ImageView
         android:id="@+id/thumb"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_weight="2"
         android:adjustViewBounds="true"
         android:contentDescription="@string/thumbtext"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toTopOf="@+id/guideline1"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="6dp" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:gravity="center"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/thumb"
+        app:layout_constraintStart_toEndOf="@id/thumb"
+        app:layout_constraintTop_toTopOf="@id/thumb"
         tools:text="Title" />
 
     <TextView
         android:id="@+id/released"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:gravity="center_horizontal"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/thumb"
+        app:layout_constraintStart_toEndOf="@id/thumb"
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="2018-3-25" />
 
@@ -50,11 +57,13 @@
         android:id="@+id/rating"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:gravity="center_horizontal"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/thumb"
+        app:layout_constraintStart_toEndOf="@id/thumb"
         app:layout_constraintTop_toBottomOf="@id/released"
         tools:text="Rating" />
 
@@ -62,12 +71,9 @@
         android:id="@+id/detailscroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
 
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_weight="2"
         app:layout_constraintBottom_toTopOf="@+id/guideline1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/thumb"
@@ -86,10 +92,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/reviewRecycler"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,8 +107,6 @@
         android:id="@+id/videosRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -139,12 +141,28 @@
         android:id="@+id/reviewTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:text="Reviews:"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline1" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.33" />
+
+    <Button
+        android:id="@+id/favorit_button"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/thumb"
+        app:layout_constraintEnd_toEndOf="@id/thumb"
+        tools:background="@drawable/ic_heart" />
 
 
 </android.support.constraint.ConstraintLayout>
