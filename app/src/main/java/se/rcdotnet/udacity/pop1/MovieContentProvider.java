@@ -1,4 +1,4 @@
-package se.rcdotnet.udacity.pop1.database;
+package se.rcdotnet.udacity.pop1;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -26,15 +26,12 @@ public class MovieContentProvider extends ContentProvider {
 
 // uri matcher
 private static final UriMatcher mUriMatcher = buildUriMatcher();
-
     private MovieDbHelper mMovieDbHelper;
 
    // Uri matcher
     public static UriMatcher buildUriMatcher() {
-
         // no match by default
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-
         // Adding matches
         uriMatcher.addURI(MoviesContract.AUTHORITY, MoviesContract.PATH_MOVIES, MOVIES);
         uriMatcher.addURI(MoviesContract.AUTHORITY, MoviesContract.PATH_MOVIES + "/#", MOVIES_RECORD);
@@ -53,9 +50,9 @@ private static final UriMatcher mUriMatcher = buildUriMatcher();
         mMovieDbHelper = new MovieDbHelper(getContext());
        return true;
     }
-
     @Nullable
     @Override
+    // QUERY
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
                         @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         final SQLiteDatabase mDB = mMovieDbHelper.getReadableDatabase();
@@ -88,7 +85,6 @@ private static final UriMatcher mUriMatcher = buildUriMatcher();
         rCursor.setNotificationUri(getContext().getContentResolver(), uri);
         return rCursor;
     }
-
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
@@ -97,8 +93,8 @@ private static final UriMatcher mUriMatcher = buildUriMatcher();
 
     @Nullable
     @Override
+    //INSERT
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-
         final SQLiteDatabase mDB = mMovieDbHelper.getWritableDatabase();
         Uri rUri;
         int op = mUriMatcher.match(uri);
@@ -128,8 +124,8 @@ private static final UriMatcher mUriMatcher = buildUriMatcher();
         getContext().getContentResolver().notifyChange(uri, null);
         return rUri;
     }
-
     @Override
+    //DELETE
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         final SQLiteDatabase mDB = mMovieDbHelper.getWritableDatabase();
         int deleted = 0;
@@ -154,8 +150,9 @@ private static final UriMatcher mUriMatcher = buildUriMatcher();
     }
 
     @Override
+    //UPDATE
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        // we does not support update operations
+        // we does not support update operations as it is not necessary in the project
         return 0;
     }
 }

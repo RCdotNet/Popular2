@@ -4,15 +4,15 @@ package se.rcdotnet.udacity.pop1;
 // This Activity shows the details of the selected movie.
 
 
-import android.content.ContentProvider;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Parcelable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,8 +25,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-
-import se.rcdotnet.udacity.pop1.database.MoviesContract;
 
 import static android.support.v4.graphics.drawable.DrawableCompat.setTint;
 
@@ -42,7 +40,7 @@ public class DetailActivity extends AppCompatActivity implements ReviewAdapter.R
     RecyclerView mVideoRecycler;
     ReviewAdapter mReviewAdapter;
     RecyclerView.LayoutManager mReviewLayoutManager;
-    VideoAdapter mVideoAdpeter;
+    VideoAdapter mVideoAdapter;
     RecyclerView.LayoutManager mVideoLayoutManager;
     Button mFavorit;
     Drawable iconFavorit;
@@ -55,50 +53,41 @@ public class DetailActivity extends AppCompatActivity implements ReviewAdapter.R
         // and populate te UI. The transition framework animates the poster image into the final place if we are on > L
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        mImageView = (ImageView) findViewById(R.id.thumb);
-        mTitle = (TextView) findViewById(R.id.title);
-        mRelease = (TextView) findViewById(R.id.released);
-        mSynopsis = (TextView) findViewById(R.id.synopsis);
-        mRating = (TextView) findViewById(R.id.rating);
-        mFavorit = (Button) findViewById(R.id.favorit_button);
-        mReviewRecycler = (RecyclerView) findViewById(R.id.reviewRecycler);
+        mImageView = findViewById(R.id.thumb);
+        mTitle = findViewById(R.id.title);
+        mRelease = findViewById(R.id.released);
+        mSynopsis = findViewById(R.id.synopsis);
+        mRating = findViewById(R.id.rating);
+        mFavorit = findViewById(R.id.favorit_button);
+        mReviewRecycler = findViewById(R.id.reviewRecycler);
         mReviewAdapter = new ReviewAdapter(this,null,this);
         mReviewLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         mReviewRecycler.setAdapter(mReviewAdapter);
         mReviewRecycler.setLayoutManager(mReviewLayoutManager);
-        mVideoRecycler = (RecyclerView) findViewById(R.id.videosRecycler);
-        mVideoAdpeter = new VideoAdapter(this,null,this);
+        mVideoRecycler = findViewById(R.id.videosRecycler);
+        mVideoAdapter = new VideoAdapter(this,null,this);
         mVideoLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        mVideoRecycler.setAdapter(mVideoAdpeter);
+        mVideoRecycler.setAdapter(mVideoAdapter);
         mVideoRecycler.setLayoutManager(mVideoLayoutManager);
         String poster_path="";
         MovieListItem list;
         Intent startIntent;
         startIntent=getIntent();
-        list=(MovieListItem) startIntent.getExtras().getParcelable("movie");
+        list = startIntent.getExtras().getParcelable("movie");
         ViewCompat.setTransitionName(mImageView, "main");
         poster_path=list.posterPath;
         Uri pictureUri = Uri.parse(PICTURE_BASE_URI+poster_path).buildUpon().build();
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && addTransitionListener())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && addTransitionListener())
         {
-            // If we're running on Lollipop and we have added a listener to the shared element
-            // transition, load the thumbnail. The listener will load the full-size image when
-            // the transition is complete.
-        //    loadThumbnail();
-            Picasso.get()
-                    .load(pictureUri)
-                    .noFade()
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .into(mImageView);
+            // Hide the favorit button during animation, the lustener will restore it.
+//            mFavorit.setVisibility(View.INVISIBLE);
         }
-//        else {
-//            // If all other cases we should just load the full-size image now
-//            Picasso.get()
-//                    .load(pictureUri)
-//                    .noFade()
-//                    .noPlaceholder()
-//                    .into(mImageView);
-//        }
+        Picasso.get()
+                .load(pictureUri)
+                .noFade()
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(mImageView);
+
         mTitle.setText(list.getTitle());
         mRelease.setText(list.getReleaseDate());
         mSynopsis.setText(list.getOwerview());
@@ -109,17 +98,18 @@ public class DetailActivity extends AppCompatActivity implements ReviewAdapter.R
         videos.execute(String.valueOf(list.getId()));
         // Check our ContentProvider, if the actual movie belongs to favorits
         iconFavorit = getResources().getDrawable(R.drawable.ic_heart);
+        iconFavorit = DrawableCompat.wrap(iconFavorit);
         int favorit = (getContentResolver().query(MoviesContract.movies.MOVIES_CONTENT_URI,new String [] {String.valueOf(list.getId())},
                 "id="+String.valueOf(list.getId()),null,null)).getCount();
         if ( favorit >0 ) {
             // yes it does
             mFavorit.setTag(true);  // indicating the state for the onClick
-            setTint(iconFavorit,Color.RED);
+            DrawableCompat.setTint(iconFavorit.mutate(),Color.RED);
             mFavorit.setBackground(iconFavorit);
         }
         else {
             mFavorit.setTag(false);
-            setTint(iconFavorit,Color.LTGRAY);
+            DrawableCompat.setTint(iconFavorit.mutate(),Color.LTGRAY);
             mFavorit.setBackground(iconFavorit);
         }
         final Integer id = list.getId();
@@ -134,16 +124,15 @@ public class DetailActivity extends AppCompatActivity implements ReviewAdapter.R
                         uri = uri.buildUpon().appendPath(String.valueOf(id)).build();
                         getContentResolver().delete(uri,null,null);
                         mFavorit.setTag(false);
-                        setTint(iconFavorit,Color.LTGRAY);
+                        DrawableCompat.setTint(iconFavorit.mutate(),Color.LTGRAY);
                         mFavorit.setBackground(iconFavorit);
                     }
                     else{
                      // Not favorit, do make it
                         getContentResolver().insert(MoviesContract.movies.MOVIES_CONTENT_URI,cv);
                         mFavorit.setTag(true);  // indicating the state for the onClick
-                        setTint(iconFavorit,Color.RED);
+                        DrawableCompat.setTint(iconFavorit.mutate(),Color.RED);
                         mFavorit.setBackground(iconFavorit);
-
                     }
             }
         });
@@ -160,49 +149,40 @@ public class DetailActivity extends AppCompatActivity implements ReviewAdapter.R
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        //Restoring the states for using laater when the data is populated.
+        //Restoring the states for using later when the data is populated.
         reviewsState = savedInstanceState.getParcelable("Reviews");
         videosState = savedInstanceState.getParcelable("Videos");
     }
-
+//Listener to listen when the animation finishes
     private boolean addTransitionListener() {
         Transition transition;
         transition=null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             transition = getWindow().getSharedElementEnterTransition();
         }
-
         if (transition != null) {
             // There is an entering shared element transition so add a listener to it
             transition.addListener(new Transition.TransitionListener() {
                 @Override
                 public void onTransitionEnd(Transition transition) {
-                    // As the transition has ended, we can now load the full-size image
-          //          loadFullSizeImage();
-//                    Picasso.with(mImageView.getContext())
-//                            .load(list.)
-//                            .into(mImageView);
-
-                    // Make sure we remove ourselves as a listener
+                    //Remove the listener
                     transition.removeListener(this);
+                    // set the favorit button visibility
+  //                  mFavorit.setVisibility(View.VISIBLE);
                 }
-
                 @Override
                 public void onTransitionStart(Transition transition) {
                     // No-op
                 }
-
                 @Override
                 public void onTransitionCancel(Transition transition) {
                     // Make sure we remove ourselves as a listener
                     transition.removeListener(this);
                 }
-
                 @Override
                 public void onTransitionPause(Transition transition) {
                     // No-op
                 }
-
                 @Override
                 public void onTransitionResume(Transition transition) {
                     // No-op
@@ -218,13 +198,11 @@ public class DetailActivity extends AppCompatActivity implements ReviewAdapter.R
 
 
     private class loadReviews extends AsyncTask<String,Void,ReviewList>{
-
         @Override
         protected ReviewList doInBackground(String... strings) {
             JsonParser parser = new JsonParser();
             return parser.ParseReviewString(NetworkU.getReviews(strings[0]));
         }
-
         @Override
         protected void onPostExecute(ReviewList s) {
             super.onPostExecute(s);
@@ -234,23 +212,39 @@ public class DetailActivity extends AppCompatActivity implements ReviewAdapter.R
         }
     }
     private class loadVideos extends AsyncTask<String,Void,VideoList>{
-
         @Override
         protected VideoList doInBackground(String... strings) {
             JsonParser parser = new JsonParser();
             return parser.parseMoviesString(NetworkU.getVideos(strings[0]));
         }
-
         @Override
         protected void onPostExecute(VideoList s) {
             super.onPostExecute(s);
             videoList = s;
-            mVideoAdpeter.SwapData(s);
+            mVideoAdapter.SwapData(s);
             if (videosState != null) mVideoLayoutManager.onRestoreInstanceState(videosState);
         }
     }
-    @Override
-    public void onClick(Uri lookup) {
 
+    // handle the click events from the Review and Videos adapters.
+    @Override
+    public void onClick(Object data) {
+        if (data.getClass() == VideoListItem.class){
+            // show the video in youtube or in a browser
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + ((VideoListItem)data).getKey()));
+            // Check if youtube app installed
+            if (intent.resolveActivity(getPackageManager()) != null)
+                startActivity(intent);
+            else
+            {
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + ((VideoListItem)data).getKey()));
+                startActivity(intent);
+            }
+        }
+        else {
+            Intent intent = new Intent(this,ReviewActivity.class);
+            intent.putExtra("review", (ReviewItem)data);
+            startActivity(intent);
+        }
     }
 }

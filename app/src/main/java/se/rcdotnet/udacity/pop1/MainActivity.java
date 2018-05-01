@@ -33,9 +33,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import se.rcdotnet.udacity.pop1.database.MoviesContract;
-
-
 
 public class MainActivity extends AppCompatActivity implements MoviesListAdapter.MoviesListClickHandler,
         LoaderManager.LoaderCallbacks<MovieList>,
@@ -43,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements MoviesListAdapter
 
     static final String TAG = "Main";
 
-    // Declaring the actvitis global variables
+    // Declaring the activity's global variables
     private RecyclerView mRecyclerView;
     private TextView mErrorTextView;
     private ProgressBar mProgressBar;
@@ -127,10 +124,7 @@ public class MainActivity extends AppCompatActivity implements MoviesListAdapter
         super.onRestoreInstanceState(state);
         Log.d(TAG,"OnRestoreInstance" + state);
     }
-//    @Override
-//    protected void onRestoreInsatnceState (Bundle state, PersistableBundle pstate){
-//        super.onRestoreInstanceState(state,pstate);
-//    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // deciding which action menu to show, depending on the users's previous prefernce
@@ -219,7 +213,9 @@ public class MainActivity extends AppCompatActivity implements MoviesListAdapter
                    sock.connect(new InetSocketAddress("8.8.8.8", 53), 1500);
                    sock.close();
                    int x = Integer.MAX_VALUE;
-                   for (int i=1 ; i<= 10; i++) {  // we have a request count limit at 40
+                   // while the prohect description does not define how many pages we need to read in,
+                   // let's read 2 pages, just to show the possibility.
+                   for (int i=1 ; i<= 2; i++) {  // we have a request count limit at 40
                        try {
                            // choose endpoint corresponds to user's last selection
                            if (display.equals("favorit")){

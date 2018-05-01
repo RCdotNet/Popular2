@@ -12,16 +12,12 @@ import android.widget.TextView;
  * Created by Laszlo_HP_Notebook on 2018-04-22.
  */
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHolder> {
-
-
-   ReviewList mReviewList;
+    ReviewList mReviewList;
     Context mContext;
-
-
     final private ReviewAdapterClickHandler mClickHandler;
 
     public interface ReviewAdapterClickHandler {
-        void onClick(Uri lookup);
+        void onClick(Object data);
     }
 
     public ReviewAdapter(Context context, ReviewList r, ReviewAdapterClickHandler listener) {
@@ -58,14 +54,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     }
 
     public class ReviewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        // TODO define variables for the viewholder's views
         TextView mAuthor;
         TextView mReview;
 
         public ReviewHolder(View itemView) {
             super(itemView);
-            // TODO find the views, and store the references
-            mAuthor = itemView.findViewById(R.id.authorTexeView);
+            mAuthor = itemView.findViewById(R.id.authorTextView);
             mReview = itemView.findViewById(R.id.reviewTextView);
             itemView.setOnClickListener(this);
         }
@@ -73,7 +67,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            mClickHandler.onClick((Uri) v.getTag());
+            mClickHandler.onClick(v.getTag());
         }
     }
 

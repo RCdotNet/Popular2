@@ -5,7 +5,7 @@
     <string name="favorit">Show favorites</string>
     <string name="show_popular">Showing popular movies</string>
     <string name="show_top_rated">Showing top rated movies</string>
-    <string name="show_top_favorit">Showing favorit movies</string>
+    <string name="show_top_favorit">Showing favorite movies</string>
     <string name="thumbtext">Movie picture</string>
     <string name="rating">Rating:</string>
     <string name="nonetwork">There is no network connection</string>

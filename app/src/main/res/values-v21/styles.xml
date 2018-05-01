@@ -6,7 +6,8 @@
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/secondaryColor</item>
-
+        <!--menu background:-->
+        <item name="android:itemBackground">@color/primaryLightColor</item>
         <!-- Set the transitions which are used for the entrance and exit of shared elements -->
         <item name="android:windowSharedElementEnterTransition">
             @transition/grid_detail_transition

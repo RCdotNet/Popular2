@@ -59,7 +59,7 @@ public final class NetworkU {
         }
     }
     public static String getReviews(String id){
-        // Build Uri for top rated enpoint and get data
+        // Build Uri for reviews enpoint and get data
         URL reviewsURL;
         Uri returnuri = Uri.parse(BASEURL).buildUpon().appendPath(id).appendPath(REVIEW).appendQueryParameter("api_key",ApiKey.getAPIKEY()).build();
         try {
@@ -76,7 +76,7 @@ public final class NetworkU {
         }
     }
     public static String getVideos(String id){
-        // Build Uri for top rated enpoint and get data
+        // Build Uri for videos enpoint and get data
         URL videosURL;
         Uri returnuri = Uri.parse(BASEURL).buildUpon().appendPath(id).appendPath(VIDEOS).appendQueryParameter("api_key",ApiKey.getAPIKEY()).build();
         try {
@@ -94,7 +94,7 @@ public final class NetworkU {
     }
 
     public static String get_Details(int i){
-        // Build Uri for popular endpoint and get data
+        // Build Uri details endpoint and get data
         URL detailsURL;
         Uri returnuri = Uri.parse(BASEURL).buildUpon().appendPath(String.valueOf(i)).appendQueryParameter("api_key",ApiKey.getAPIKEY()).build();
         try {

@@ -1,4 +1,4 @@
-package se.rcdotnet.udacity.pop1.database;
+package se.rcdotnet.udacity.pop1;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by Laszlo_HP_Notebook on 2018-04-26.
  */
+    // DBHelper, we using the contract to build the database.
+    // While we define the whole data objects as tables, we coming to use only the Movies table to store the favorit IDs.
+    // The database gives place for further improvements.
 
 public class MovieDbHelper extends SQLiteOpenHelper {
 

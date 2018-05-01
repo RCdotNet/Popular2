@@ -1,4 +1,4 @@
-package se.rcdotnet.udacity.pop1.database;
+package se.rcdotnet.udacity.pop1;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
  */
 
 public class MoviesContract  {
-    // Content Provider constans
+    // Content Provider constans , the contract.
     // Authority name
     public static final String AUTHORITY = "se.rcdotnet.udacity.pop1.movies";
 

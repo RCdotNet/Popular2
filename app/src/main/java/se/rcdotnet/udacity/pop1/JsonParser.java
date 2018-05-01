@@ -53,6 +53,7 @@ public class  JsonParser {
     }
 
     public MovieListItem ParseMovieItem (String stringToParse){
+        //Parsing the movie details reurned from /movie/{id} endpont. Parsing only the data we need.
         MovieListItem listItem = new MovieListItem();
         try {
             JSONObject movieItem = new JSONObject(stringToParse);

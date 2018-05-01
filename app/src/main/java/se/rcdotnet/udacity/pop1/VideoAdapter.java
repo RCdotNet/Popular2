@@ -15,16 +15,12 @@ import com.squareup.picasso.Picasso;
  * Created by Laszlo_HP_Notebook on 2018-04-22.
  */
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder> {
-
-
-     VideoList videoList = null;
+    VideoList videoList = null;
     Context mContext;
-
-
     final private VideoAdapterClickHandler mClickHandler;
 
     public interface VideoAdapterClickHandler {
-        void onClick(Uri lookup);
+        void onClick(Object data);
     }
 
     public VideoAdapter(Context context, VideoList list, VideoAdapterClickHandler listener) {
@@ -47,10 +43,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder>
         Picasso.get()
                 .load("https://img.youtube.com/vi/"+item.getKey()+"/0.jpg")
                 .noFade()
-                .placeholder(R.drawable.ic_launcher_background)
                 .into(holder.mPreview);
         holder.itemView.setTag(item);
-        // TODO bind the view
     }
 
     public void SwapData(VideoList l) {
@@ -66,12 +60,10 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder>
     }
 
     public class VideoHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        // TODO define variables for the viewholder's views
         ImageView mPreview;
 
         public VideoHolder(View itemView) {
             super(itemView);
-            // TODO find the views, and store the references
             mPreview = (ImageView) itemView.findViewById(R.id.videoPreviewView);
             itemView.setOnClickListener(this);
         }
@@ -79,7 +71,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder>
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            mClickHandler.onClick((Uri) v.getTag());
+            mClickHandler.onClick(v.getTag());
         }
     }
 
