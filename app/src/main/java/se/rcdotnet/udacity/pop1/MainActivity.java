@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements MoviesListAdapter
                    sock.connect(new InetSocketAddress("8.8.8.8", 53), 1500);
                    sock.close();
                    int x = Integer.MAX_VALUE;
-                   // while the prohect description does not define how many pages we need to read in,
+                   // while the project description does not define how many pages we need to read in,
                    // let's read 2 pages, just to show the possibility.
                    for (int i=1 ; i<= 2; i++) {  // we have a request count limit at 40
                        try {
